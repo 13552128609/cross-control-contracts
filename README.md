@@ -1,2 +1,2 @@
-# instance token contract
- instance token contract
+# cross control contract
+cross control contract
