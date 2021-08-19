@@ -6,14 +6,25 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/EnumerableSet.sol";
 import "./CrossControlStorage.sol";
+import "@openzeppelin/contracts/proxy/Initializable.sol";
 
-contract CrossControlDelegate is AccessControl, CrossControlStorage{
+contract CrossControlDelegate is
+    Initializable,
+    AccessControl,
+    CrossControlStorage
+{
     using EnumerableSet for EnumerableSet.UintSet;
-    constructor() public {
-        _globalProhibit = false;
-        // todo user A
+
+    function initialize(address superAdmin_, address admin_, address monitor_)
+    external
+    initializer
+    {
+        _setupRole(DEFAULT_ADMIN_ROLE, superAdmin_);
+
+        _setupRole(ADMIN_ROLE, admin_);
         _setRoleAdmin(MONITOR_ROLE, ADMIN_ROLE);
-        _setupRole(ADMIN_ROLE, msg.sender);
+
+        _setupRole(MONITOR_ROLE, monitor_);
     }
 
     function getGlobalProhibit()
@@ -108,8 +119,11 @@ contract CrossControlDelegate is AccessControl, CrossControlStorage{
     function _removeAllTokenPairIDs()
     internal
     {
-        for (uint256 i = 0; i < _setWLTokenPairIDs.length(); i++) {
-            require(_setWLTokenPairIDs.remove(_setWLTokenPairIDs.at(i)), "No token pair ID");
+        uint256 count = _setWLTokenPairIDs.length();
+        if( count > 0){
+            for (uint256 i = count; i >= 1; i--) {
+                require(_setWLTokenPairIDs.remove(_setWLTokenPairIDs.at(i-1)), "No token pair ID");
+            }
         }
     }
 }
