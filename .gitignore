@@ -1,0 +1,15 @@
+ build/
+  3 node_modules/
+  4 .cxt
+  5 #keystore
+  6 coverage/
+  7 yarn*
+  8 .DS_Store
+  9 coverage.json
+ 10 coverageEnv
+ 11 scTopics
+ 12 allFiredEvents
+ 13 .DS_Store
+ 14 .idea
+ 15 .vscode
+ 16 package-lock.json
