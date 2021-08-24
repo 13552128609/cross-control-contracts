@@ -77,9 +77,9 @@ async function deploy(argv) {
         network: argv.network, // 'mainnet' or 'testnet' or 'ethereum' or 'rinkeby'
         nodeURL: argv.nodeURL,
         privateKey: ownerPrivateKey,
-        superAddr:argv.superAddr,
+        superAddr: argv.superAddr,
         adminAddr: argv.adminAddr,
-        monitorAddr:argv.monitorAddr,
+        monitorAddr: argv.monitorAddr,
         contractDir: path.join(__dirname, "..", 'contracts'),
         outputDir: path.join(__dirname, "..", 'build', 'sc-contracts'),
         gasPrice: Number(argv.gasPrice),
@@ -94,31 +94,35 @@ async function deploy(argv) {
 
     let deployed = {};
     for (let contract in contractDict.address) {
-      let abiName;
-      let abiContract = getProxyDelegate(contract);
-      if (contractDict.abi[abiContract]) {
-        abiName = `abi.${abiContract}.json`;
-        fs.writeFileSync(path.join(deployedPath, abiName), JSON.stringify(contractDict.abi[abiContract]), {flag: 'w', encoding: 'utf8', mode: '0666'});
-      }
-      deployed[contract] = { address: contractDict.address[contract] };
-      if (abiName) {
-        deployed[contract].abi = abiName;
-      }
+        let abiName;
+        let abiContract = getProxyDelegate(contract);
+        if (contractDict.abi[abiContract]) {
+            abiName = `abi.${abiContract}.json`;
+            fs.writeFileSync(path.join(deployedPath, abiName), JSON.stringify(contractDict.abi[abiContract]), {
+                flag: 'w',
+                encoding: 'utf8',
+                mode: '0666'
+            });
+        }
+        deployed[contract] = {address: contractDict.address[contract]};
+        if (abiName) {
+            deployed[contract].abi = abiName;
+        }
     }
 
     if (Object.keys(deployed).length > 0) {
-      // merge
-      const outputFile = path.join(deployedPath,`${argv.network}.json`);
-      if (fs.existsSync(outputFile)) {
-        const preDeployed = require(outputFile);
-        for (let key in preDeployed) {
-          if (!deployed[key]) {
-            deployed[key] = preDeployed[key];
-          }
+        // merge
+        const outputFile = path.join(deployedPath, `${argv.network}.json`);
+        if (fs.existsSync(outputFile)) {
+            const preDeployed = require(outputFile);
+            for (let key in preDeployed) {
+                if (!deployed[key]) {
+                    deployed[key] = preDeployed[key];
+                }
+            }
         }
-      }
-      fs.writeFileSync(outputFile, JSON.stringify(deployed, null, 5), {flag: 'w', encoding: 'utf8', mode: '0666'});
-      console.log("output", deployedPath);
+        fs.writeFileSync(outputFile, JSON.stringify(deployed, null, 5), {flag: 'w', encoding: 'utf8', mode: '0666'});
+        console.log("output", deployedPath);
     }
 }
 

@@ -30,7 +30,7 @@ async function wanchainScDeploy(cfg, isMainnet) {
     contract[scDict.CrossControlProxy] = ccp.address;
     contract[scDict.CrossControlDelegate] = ccd.address;
     abi[scDict.CrossControlProxy] = ccp.abi;
-    abi[scDict.TokenManagerDelegate] = ccd.abi;
+    abi[scDict.CrossControlDelegate] = ccd.abi;
 
     txData = await crossControl.methods.initialize(superAdminAddr, adminAddr, monitorAddr).encodeABI();
     await wanchainScSdkDeployer.sendTx(ccp.address, txData);

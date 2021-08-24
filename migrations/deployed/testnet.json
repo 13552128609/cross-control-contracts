@@ -1,8 +1,10 @@
 {
      "CrossControlProxy": {
-          "address": "0x33a1758D521bb8c0849Ed62C97E3b6A3D51Ea032"
+          "address": "0x9ba53c4b3604C07379A08D321eE071a06d781d77",
+          "abi": "abi.CrossControlDelegate.json"
      },
      "CrossControlDelegate": {
-          "address": "0xB97F12d628E443D3C3996c37EDfD236bAC844B2B"
+          "address": "0xb0858B4368FEf75FbCb99675C0F75d035f64D540",
+          "abi": "abi.CrossControlDelegate.json"
      }
 }
