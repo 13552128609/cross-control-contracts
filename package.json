@@ -8,7 +8,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^3.4.1",
+    "@openzeppelin/contracts": "3.4.0",
     "@openzeppelin/test-helpers": "^0.5.6",
     "bigi": "^1.4.2",
     "bignumber.js": "^7.2.1",
@@ -30,7 +30,7 @@
     "truffle": "^5.1.49",
     "truffle-hdwallet-provider": "^1.0.17",
     "truffle-privatekey-provider": "^0.1.0",
-    "wanchain-sc-sdk": "git://github.com/wanchain/wanchain-sc-sdk.git#eth-0.4.26",
+    "wanchain-sc-sdk": "git://github.com/wanchain/wanchain-sc-sdk.git#eth-0.6.12",
     "wanchain-truffle-sdk": "^1.0.0",
     "wanchain-util": "^1.2.0",
     "web3-eth-abi": "^1.2.4",

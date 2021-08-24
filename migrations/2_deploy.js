@@ -17,4 +17,5 @@ module.exports = async function (deployer, network) {
   // await deployer.deploy(MappingTokenV2,name,symbol,decimal);
   // let sc = await MappingTokenV2.deployed();
   // console.log("symbol:%s , name :%s, decimal:%d, scAddress",symbol,name,decimal,sc.address);
+
 };
