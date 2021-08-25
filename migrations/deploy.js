@@ -85,9 +85,7 @@ async function deploy(argv) {
         gasPrice: Number(argv.gasPrice),
         gasLimit: Number(argv.gasLimit)
     }
-    console.log("cfg", hideObject(cfg, ["privateKey", "adminPrivateKey"]));
     const workspace = getWorkspace(__dirname, contractLoad, wanchainScScript);
-    console.log("run", workspace[chainType].deploy);
 
     const {wanchainScDeploy} = require(workspace[chainType].deploy);
     let contractDict = await wanchainScDeploy(cfg, isMainnet);

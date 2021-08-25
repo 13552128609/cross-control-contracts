@@ -12,15 +12,8 @@ async function wanchainScDeploy(cfg, isMainnet) {
     let monitorAddr = cfg.monitorAddr.toLowerCase();
     let superAdminAddr = cfg.superAddr.toLowerCase();
 
-    console.log("superAdminAddr", superAdminAddr);
-    console.log("adminAddr", adminAddr);
-    console.log("monitorAddr", monitorAddr);
-    console.log("workerAddr", workerAddr);
-
-
     await wanchainScSdkDeployer.deploy(scDict.CrossControlDelegate);
     let ccd = await wanchainScSdkDeployer.deployed(scDict.CrossControlDelegate);
-    console.log(ccd.address, superAdminAddr);
 
 
     await wanchainScSdkDeployer.deploy(scDict.CrossControlProxy, ccd.address, superAdminAddr, '0x');
