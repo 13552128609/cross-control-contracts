@@ -53,16 +53,34 @@ contract CrossControlDelegate is
         _globalProhibit = false;
     }
 
-    function isValidTokenPair(uint256 tokenPairId_)
+//    function isValidTokenPair(uint256 tokenPairId_)
+//    external
+//    view
+//    returns (bool)
+//    {
+//        if (!_globalProhibit || _setWLTokenPairIDs.contains(tokenPairId_)) {
+//            return true;
+//        }
+//        return false;
+//    }
+
+    function isTokenPairInWL(uint256 tokenPairId_)
     external
     view
     returns (bool)
     {
-        if (!_globalProhibit || _setWLTokenPairIDs.contains(tokenPairId_)) {
-            return true;
-        }
-        return false;
+        return _setWLTokenPairIDs.contains(tokenPairId_);
     }
+
+    function isTokenPairInBL(uint256 tokenPairId_)
+    external
+    view
+    returns (bool)
+    {
+        return _setBLTokenPairIDs.contains(tokenPairId_);
+    }
+
+
 
     function getAllWLTokenPairs()
     external
@@ -84,6 +102,13 @@ contract CrossControlDelegate is
         require(_setWLTokenPairIDs.add(tokenPairId_), "Duplicate token pair ID");
     }
 
+    function addTokenPairIdToBL(uint256 tokenPairId_)
+    external
+    {
+        require(hasRole(ADMIN_ROLE, _msgSender()), "Not admin");
+        require(_setBLTokenPairIDs.add(tokenPairId_), "Duplicate token pair ID");
+    }
+
     function addTokenPairIDs(uint256[] memory tokenPairIDs_)
     external
     {
@@ -91,6 +116,13 @@ contract CrossControlDelegate is
         for (uint256 i = 0; i < tokenPairIDs_.length; i++) {
             require(_setWLTokenPairIDs.add(tokenPairIDs_[i]), "Duplicate token pair ID");
         }
+    }
+
+    function removeTokenPairIdFromBL(uint256 tokenPairId_)
+    external
+    {
+        require(hasRole(ADMIN_ROLE, _msgSender()), "Not admin");
+        require(_setBLTokenPairIDs.remove(tokenPairId_), "No token pair ID");
     }
 
     function removeTokenPairId(uint256 tokenPairId_)

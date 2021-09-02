@@ -9,4 +9,5 @@ contract CrossControlStorage {
 
     bool   _globalProhibit;
     EnumerableSet.UintSet   _setWLTokenPairIDs;
+    EnumerableSet.UintSet   _setBLTokenPairIDs;
 }
