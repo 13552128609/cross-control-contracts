@@ -41,7 +41,6 @@ contract CrossControlDelegate is
         require(!_globalProhibit, 'already turn on');
         require(hasRole(ADMIN_ROLE, _msgSender()) || hasRole(MONITOR_ROLE, _msgSender()), "Nether admin Nor Monitor");
         _globalProhibit = true;
-        _removeAllTokenPairIDs();
     }
 
     // only admin can turnOffProhibit
@@ -51,6 +50,7 @@ contract CrossControlDelegate is
         require(_globalProhibit, 'already turn off');
         require(hasRole(ADMIN_ROLE, _msgSender()), "Not admin");
         _globalProhibit = false;
+        _removeAllTokenPairIDs();
     }
 
 //    function isValidTokenPair(uint256 tokenPairId_)
@@ -80,7 +80,18 @@ contract CrossControlDelegate is
         return _setBLTokenPairIDs.contains(tokenPairId_);
     }
 
+    function getAllBLTokenPairs()
+    external
+    view
+    returns (uint256[] memory)
+    {
 
+        uint256[] memory ret = new uint[](_setBLTokenPairIDs.length());
+        for (uint256 i = 0; i < _setBLTokenPairIDs.length(); i++) {
+            ret[i] = _setBLTokenPairIDs.at(i);
+        }
+        return ret;
+    }
 
     function getAllWLTokenPairs()
     external
@@ -153,8 +164,8 @@ contract CrossControlDelegate is
     {
         uint256 count = _setWLTokenPairIDs.length();
         if( count > 0){
-            for (uint256 i = count; i >= 1; i--) {
-                require(_setWLTokenPairIDs.remove(_setWLTokenPairIDs.at(i-1)), "No token pair ID");
+            for (uint256 i = count-1; i >= 0; i--) {
+                require(_setWLTokenPairIDs.remove(_setWLTokenPairIDs.at(i)), "No token pair ID");
             }
         }
     }
